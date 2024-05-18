@@ -59,16 +59,15 @@ function createCard(value) {
 
 function flipCard(card, img) {
   if (playing) {
-    if (lockBoard || flippedCards.includes(card)) {
+    if (lockBoard) {
       return;
     }
 
-    img.classList.remove("hidden");
-    card.classList.add("flipped");
-
-    flippedCards.push(card);
-
-    if (flippedCards.length === 2) {
+    if(!card.classList.contains("flipped") && flippedCards.length < 2) {
+      img.classList.remove("hidden");
+      card.classList.add("flipped");
+      flippedCards.push(card);
+      if (flippedCards.length === 2) {
       const [card1, card2] = flippedCards;
       const currentPlayerAttempts =
         currentPlayer === 1 ? ++attemptsPlayer1 : ++attemptsPlayer2;
@@ -105,6 +104,8 @@ function flipCard(card, img) {
       updateStats();
     }
   }
+}
+     
 }
 
 function updateStats() {
